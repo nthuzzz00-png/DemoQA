@@ -12,7 +12,7 @@ export class ButtonPage{
         this.page = page;
         this.btnDoubleClickMe = page.locator('#doubleClickBtn');
         this.btnRightClickMe = page.locator('#rightClickBtn');
-        this.btnClickMe = page.locator('#tJHho');
+        this.btnClickMe = page.locator('xpath=//button[text()="Click Me"]');
         this.lbDoubleClickMessage =page.locator('#doubleClickMessage');
         this.lbRightClickMessage = page.locator('#rightClickMessage');
         this.lbClickMeMessage = page.locator('#dynamicClickMessage');
