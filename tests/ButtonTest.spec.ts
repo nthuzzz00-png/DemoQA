@@ -21,5 +21,16 @@ test ('Verify Right Click action on button', async({ page }) => {
     //Lấy text của locator btnRightClickMe
     const actualText: string = await buttonPage.getTextResult(buttonPage.lbRightClickMessage);
     expect(actualText).toBe(expectRightClick);
-})
+});
+
+test ('Verify Dynamic Click action on button', async({ page }) => {
+    const expectDynamicClick: string = 'You have done a dynamic click';
+    const buttonPage = new ButtonPage(page);
+    const testBase = new TestBase(page);
+    await testBase.goto('buttons');
+    await buttonPage.btnClickMe.click();
+    //Lấy text của locator btnClickMe
+    const actualText: string = await buttonPage.getTextResult(buttonPage.lbClickMeMessage);
+    expect(actualText).toBe(expectDynamicClick);
+});
 
