@@ -1,0 +1,2 @@
+'FirstName','LastName', 'Email', 'Gender', 'Mobile', 'DateOfBirth', 'Subjects', 'Hobbies', 'Picture', 'CurrentAddress', 'State', 'City'
+'Nguyễn', 'Thu', 'thu@gmail.com', 'Female', '0987654321', '01 March 2000', ['Maths','Arts'], ['Sports', 'Reading'], 'Picture1.jpeg', 'địa chỉ', 'NCR', 'Delhi'

@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, BrowserContext } from "@playwright/test";
 export class TestBase{
     readonly page: Page;
     constructor(page: Page) {
@@ -45,7 +45,7 @@ export class TestBase{
         }
     }
 
-    async selectCheckBoxs(checkBoxXpath: string, labels: string[]): Promise<void> {
+    async selectCheckBoxes(checkBoxXpath: string, labels: string[]): Promise<void> {
         for (const value of labels) {
             const checkBoxLocator: Locator = this.getLocatorByXpath(value, checkBoxXpath);
             await checkBoxLocator.check();
@@ -62,4 +62,58 @@ export class TestBase{
         return new Promise(resolve => setTimeout(resolve, timeout));
     }
 
+    async selectDropdownList(locator: Locator, option: string): Promise<void> {
+        await locator.selectOption({ label: option });
+    }
+
+    //Opent new tab link bất kì
+    async openNewTab(context: BrowserContext, url?: string): Promise<Page> {
+        const newPage = await context.newPage();
+        if (url) {
+            await newPage.goto(url);
+        }
+        return newPage;
+    }
+
+    async clickAndOpenNewTab(page: Page, context: BrowserContext, locator: Locator): Promise<Page> {
+        const [newPage] = await Promise.all([
+            context.waitForEvent('page'),
+            locator.click()
+        ]);
+        await newPage.waitForLoadState();
+        return newPage;
+    }
+
+    //Open new window link bất kì
+    async openNewWindow(context: BrowserContext, url?: string): Promise<Page> {
+        const newPage = await context.newPage();
+        if (url) {
+            await newPage.goto(url);
+        }
+        return newPage;
+    }
+
+    async clickAndOpenNewWindow(page: Page, context: BrowserContext, locator: Locator): Promise<Page> {
+        const [newPage] = await Promise.all([
+            context.waitForEvent('page'),
+            locator.click()
+        ]);
+        await newPage.waitForLoadState();
+        return newPage;
+    }
+
+    async getTextLocator(locator: Locator): Promise<string> {
+        const text: string = await locator.textContent() || '';
+        return text;
+    }
+
+    //Alerts
+    async clickAlertsButton(page: Page, action: 'accept', promptText?: string): Promise<string> {
+        let alertMessage: string = '';
+        page.once('dialog', async (dialog) => {
+            alertMessage = await dialog.message();
+            await dialog.accept(promptText);
+        });
+        return alertMessage;
+    }
 }
