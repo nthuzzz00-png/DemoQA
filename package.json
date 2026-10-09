@@ -1,0 +1,29 @@
+{
+  "name": "demoqa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thugnguyen/DemoQA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/thugnguyen/DemoQA/issues"
+  },
+  "homepage": "https://github.com/thugnguyen/DemoQA#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.6.1"
+  },
+  "allowScripts": {
+    "@types/node@26.6.1": true
+  },
+  "dependencies": {
+    "csv-parse": "^7.0.2"
+  }
+}
