@@ -12,7 +12,7 @@ export class PracticeFormPage {
     readonly ddlMonth: Locator;
     readonly lbDate: string = '//*[@class="react-datepicker__month"]/div[@param1]/div[text()="@param2"]';
     readonly cbSubjects: Locator;
-    readonly cbxHobbiesXpath: string ='//input[@value="@param"]';
+    readonly chkHobbiesXpath: string ='//input[@value="@param"]';
     readonly txtPicture: Locator;
     readonly txtCurrentAddress: Locator;
     readonly ddlState: Locator;
@@ -45,11 +45,17 @@ export class PracticeFormPage {
         await this.testBase.inputText(this.txtMobile, mobile);
         await this.inputDateOfBirth(dateOfBirth, this.txtDateOfBirth);
         await this.testBase.inputComboboxWithMultiValues(this.cbSubjects, subjects);
-    
+        await this.testBase.selectCheckBoxes(this.chkHobbiesXpath, hobbies);
+        await this.testBase.inputText(this.txtPicture, picturePath);
+        await this.testBase.inputText(this.txtCurrentAddress, currentAddress);
+        await this.testBase.selectDropdownBox(this.ddlState, state);
+        await this.testBase.selectDropdownBox(this.ddlCity, city);
+        await this.testBase.clickElement(this.submitButton);
 
     }
 
     async inputDateOfBirth(dateOfBirth: string, locator: Locator): Promise<void> {
+        await this.testBase.clickElement(locator);
         const dateOfBirths: string[] = dateOfBirth.split(' ');
         await this.testBase.selectDropdownBox(this.ddlYear, dateOfBirths[2]);
         await this.testBase.selectDropdownBox(this.ddlMonth, dateOfBirths[1]);
@@ -61,6 +67,13 @@ export class PracticeFormPage {
         const dynamicXpath: string = xpath.replace('@param1', param1).replace('@param2', param2);
         const locator: Locator = this.page.locator(`xpath=${dynamicXpath}`);
         return locator;
+    }
+
+    async getRedBorderColor(locator: Locator): Promise<string> {
+        const borderColor: string = await locator.evaluate((element) => {
+            return window.getComputedStyle(element).getPropertyValue('border-color');
+        });
+        return borderColor;
     }
 
 }
