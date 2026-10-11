@@ -106,14 +106,4 @@ export class TestBase{
         const text: string = await locator.textContent() || '';
         return text;
     }
-
-    //Alerts
-    async clickAlertsButton(page: Page, action: 'accept', promptText?: string): Promise<string> {
-        let alertMessage: string = '';
-        page.once('dialog', async (dialog) => {
-            alertMessage = await dialog.message();
-            await dialog.accept(promptText);
-        });
-        return alertMessage;
-    }
 }

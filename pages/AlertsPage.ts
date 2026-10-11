@@ -1,4 +1,4 @@
-import {Page, Locator} from "@playwright/test";
+import {Page, Locator, Dialog} from "@playwright/test";
 import {TestBase} from "../common/TestBase";
 export class AlertsPage {
     readonly page: Page;
@@ -17,14 +17,14 @@ export class AlertsPage {
         this.testBase = new TestBase(this.page);
     }
 
-    async clickAlertsButton(page: Page, action: () => Promise<string>){
-        let alertMessage: string = '';
-        const [dialog] = await Promise.all([
-            this.page.waitForEvent ('dialog').then(dialog => {
-                alertMessage = dialog.message();
-            })
-        ]);
-        await dialog.accept();
+    async getAlertMessageAndClickAccept(page: Page, locator: Locator): Promise<string> {
+        let alertMessage: string = '';        
+        page.on('dialog', async dialog => {
+            alertMessage = dialog.message();
+            await page.waitForTimeout(5000);
+            await dialog.accept();
+        });
+        await this.testBase.clickElement(locator);
         return alertMessage;
     }
 
