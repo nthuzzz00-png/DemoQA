@@ -5,7 +5,9 @@ test ('Test alerts', async ({ page }) => {
     const alertsPage = new AlertsPage(page);
     const testBase = new TestBase(page);
     await testBase.goto('alerts');
-    
-    const alertMessage = await alertsPage.clickAlertsButton(page, 'accept');
+    //await page.waitForTimeout(5000);
+    // await testBase.clickElement(alertsPage.alertsButton);
+    const alertMessage = await alertsPage.getAlertMessageAndClickAccept(page, alertsPage.alertsButton);
     expect(alertMessage).toBe('You clicked a button');
+
 })
