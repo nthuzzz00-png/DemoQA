@@ -106,4 +106,9 @@ export class TestBase{
         const text: string = await locator.textContent() || '';
         return text;
     }
+
+    //Frame
+    async getIframeText(page: Page, iframeSelector: string, elementSelector: string): Promise<string>{
+        return await page.frameLocator(iframeSelector).locator(elementSelector).textContent() || '';
+    }
 }
